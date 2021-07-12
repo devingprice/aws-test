@@ -54,14 +54,8 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
       - run: |
-        APP_NAME=${{env.APP_NAME}}
-        PIPELINE_ID=${{env.PIPELINE_ID}}
-        AWS_VERSION_LABEL=${{env.APP_NAME}}-${{env.PIPELINE_ID}}
-        S3_KEY="$AWS_VERSION_LABEL.zip"
-        echo APP_NAME
-        echo PIPELINE_ID
-        echo AWS_VERSION_LABEL
-        echo S3_KEY
+          AWS_VERSION_LABEL=${{env.APP_NAME}}-${{env.PIPELINE_ID}}
+          echo AWS_VERSION_LABEL
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v17
         with:
