@@ -61,4 +61,3 @@ jobs:
           environment_name: ${{env.ENV_NAME}}
           version_label: ${{env.APP_NAME}}-${{env.PIPELINE_ID}}
           region: ${{env.AWS_REGION}}
-          deployment_package: ${{env.APP_NAME}}.zip
