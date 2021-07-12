@@ -34,6 +34,7 @@ jobs:
         run: |
           AWS_VERSION_LABEL=${{env.APP_NAME}}-${{env.PIPELINE_ID}}
           S3_KEY="$AWS_VERSION_LABEL.zip"
+          echo AWS_VERSION_LABEL
           aws elasticbeanstalk create-application-version --application-name ${{env.APP_NAME}} --version-label $AWS_VERSION_LABEL --region ${{env.AWS_REGION}} --source-bundle S3Bucket=${{env.S3_BUCKET}},S3Key=${S3_KEY} --auto-create-application
 
   deploy_aws:
@@ -52,6 +53,10 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
+      - run: |
+        echo ${{env.APP_NAME}}
+        echo ${{env.PIPELINE_ID}}
+        echo ${{env.APP_NAME}}-${{env.PIPELINE_ID}}
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v17
         with:
