@@ -31,7 +31,7 @@ jobs:
           S3_KEY="$AWS_VERSION_LABEL.zip"
           aws s3 cp ${{env.APP_NAME}}.zip s3://${{env.S3_BUCKET}}/${S3_KEY} --region ${{env.AWS_REGION}}
       - name: Creating Elastic Beanstalk version
-      - run: |
+        run: |
           AWS_VERSION_LABEL=${{env.APP_NAME}}-${{env.PIPELINE_ID}}
           S3_KEY="$AWS_VERSION_LABEL.zip"
           aws elasticbeanstalk create-application-version --application-name ${{env.APP_NAME}} --version-label $AWS_VERSION_LABEL --region ${{env.AWS_REGION}} --source-bundle S3Bucket=${{env.S3_BUCKET}},S3Key=${S3_KEY} --auto-create-application
