@@ -5,8 +5,19 @@ on:
     branches: [develop]
 
 jobs:
-  bump_version:
+  cancel_if_flagged:
     runs-on: ubuntu-latest
+    if: "contains(github.event.head_commit.messsage, 'skip-bump')"
+    steps:
+      - run: echo "Commit message contains skip-bump"
+      - name: Cancel Workflow if failure
+        if: ${{ failure() }}
+        uses: andymckay/cancel-action@0.2
+
+  bump_version:
+    needs: cancel_if_flagged
+    outputs:
+      versionTag: ${{ steps.version-bump.outputs.newTag }}
     steps:
       - name: "Checkout source code"
         uses: "actions/checkout@v2"
@@ -30,4 +41,4 @@ jobs:
       - name: "Output Step"
         env:
           NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
-        run: echo "new tag $NEW_TAG"
+        run: echo "new version = $NEW_TAG"
