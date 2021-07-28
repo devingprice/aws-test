@@ -21,14 +21,18 @@ exports.findAll = (req, res) => {
     if (err) {
       response.success = false;
       response.message = "Database connection failed: " + err.stack;
+      console.error("Database connection failed: " + err.stack);
+
+      res.send(response);
       return;
     }
 
     response.success = true;
     response.message = "Connected to database.";
+    console.error(response.message);
+
+    res.send(response);
   });
 
   connection.end();
-
-  res.send(response);
 };
